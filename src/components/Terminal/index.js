@@ -33,7 +33,7 @@ function parse_input(input) {
 
 }
 
-function Terminal() {
+function Terminal({ extra_commands = {} }) {
 
   const [history, setHistory] = useState([]);
   const [currentCommand, setCurrentCommand] = useState('');
@@ -41,6 +41,10 @@ function Terminal() {
     help: showHelp,
     hello: greetUser,
   });
+
+  useEffect(() => {
+    setCommands((commands) => ({...commands, ...extra_commands}))
+  }, []);
 
   function showHelp() {
     return 'help command';
@@ -51,7 +55,6 @@ function Terminal() {
   }
 
   function runCommand(stdin) {
-
     const parsed_input = parse_input(stdin)
     const currentCommand = parsed_input.output.cmd;
     if (currentCommand in commands) {
