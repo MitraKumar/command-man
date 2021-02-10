@@ -1,13 +1,19 @@
+import styled from 'styled-components';
 import Terminal from './components/Terminal';
 
 
 function App() {
-  const spacing = 5;
   return (
-    <div className="App">
+    <Container>
       <Terminal />
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  max-width: 960px;
+  margin: 0 auto;
+  padding-top: 5em;
+`;
 
 export default App;

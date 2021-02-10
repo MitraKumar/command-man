@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react'
+import {
+  TerminalComponent,
+  Prompt,
+  Command,
+  InputLine,
+  UserInput,
+  StdOutputLine,
+  StdErrorLine,
+  OutputLine
+} from './styled-elements';
 
 function Terminal() {
 
-  const [history, setHistory] = useState([
-    {
-      command: 'help',
-      value: [
-        'help: gives a description of a commnd',
-        'show: shows a message',
-      ],
-    },
-  ]);
+  const [history, setHistory] = useState([]);
   const [currentCommand, setCurrentCommand] = useState('');
   const [commands, setCommands] = useState({
     help: showHelp,
@@ -18,15 +20,15 @@ function Terminal() {
   });
 
   function showHelp() {
-    return ['help command'];
+    return 'help command';
   }
 
   function greetUser() {
-    return ['hello User'];
+    return 'hello User';
   }
 
   function runCommand(currentCommand) {
-    return currentCommand in commands ? commands[currentCommand]() : [`Error: command ${currentCommand} not found`];
+    return currentCommand in commands ? commands[currentCommand]() : {value: `${currentCommand} is not found`, type: "error"};
   }
 
   function handleKeyPress(e) {
@@ -51,15 +53,15 @@ function Terminal() {
   }
 
   return (
-    <div className="Terminal">
+    <TerminalComponent>
       {
         history.map((output, index) => <Print key={index} output={output} />)
       }
-      <div>
-        <div>$ </div>
-        <input type="text" onKeyDown={handleKeyDown} onChange={handleKeyPress} value={currentCommand}/>
-      </div>
-    </div>
+      <StdOutputLine>
+        <Prompt>$</Prompt>
+        <UserInput onKeyDown={handleKeyDown} onChange={handleKeyPress} value={currentCommand} type="text" autoFocus/>
+      </StdOutputLine>
+    </TerminalComponent>
   );
 }
 
@@ -68,14 +70,31 @@ function Print({ output }) {
   const value =  output.value;
   //
   return (
-    <div className="Print">
-      <PrintLine text={command} />
-      { value.map((x, index) => <PrintLine key={index} text={x} />)}
-    </div>
+    <OutputLine>
+      <PrintLine text={command} type="command"/>
+      { Array.isArray(value) ? value.map((x, index) => <PrintLine key={index} text={x} />) : <PrintLine text={value} />}
+    </OutputLine>
   );
 }
 
-function PrintLine({ text }) {
+function PrintLine({ text, type }) {
+
+  if (type === "command") {
+    return (
+      <StdOutputLine>
+        <Prompt>$</Prompt>{ text }
+      </StdOutputLine>
+    );
+  }
+
+  if (typeof text === 'object' && "type" in text && text.type === "error") {
+    return (
+      <StdErrorLine>
+        Error: { text.value }
+      </StdErrorLine>
+    );
+  }
+
   return (
     <div className="PrintLine">
       { text }
