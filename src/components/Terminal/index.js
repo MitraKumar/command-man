@@ -10,6 +10,29 @@ import {
   OutputLine
 } from './styled-elements';
 
+
+function parse_input(input) {
+  const input_array = input.split(' ');
+  if (input_array.length === 0) {
+    return {
+      input: input,
+      output: {
+        cmd: input_array[0],
+        args: []
+      }
+    }
+  }
+
+  return {
+    input: input,
+    output: {
+      cmd: input_array[0],
+      args: input_array,
+    }
+  }
+
+}
+
 function Terminal() {
 
   const [history, setHistory] = useState([]);
@@ -23,12 +46,22 @@ function Terminal() {
     return 'help command';
   }
 
-  function greetUser() {
-    return 'hello User';
+  function greetUser(_, username = "user") {
+    return `hello ${username}`;
   }
 
-  function runCommand(currentCommand) {
-    return currentCommand in commands ? commands[currentCommand]() : {value: `${currentCommand} is not found`, type: "error"};
+  function runCommand(stdin) {
+
+    const parsed_input = parse_input(stdin)
+    const currentCommand = parsed_input.output.cmd;
+    if (currentCommand in commands) {
+      if ((parsed_input.output.args).length >  0) {
+        const args = parsed_input.output.args
+        return commands[currentCommand](...args)
+      }
+      return commands[currentCommand]();
+    }
+    return  {value: `${currentCommand} is not found`, type: "error"};
   }
 
   function handleKeyPress(e) {
