@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import {
   TerminalComponent,
   Prompt,
@@ -10,32 +11,22 @@ import {
   OutputLine
 } from './styled-elements';
 
+import { runCommand } from '../../store/actions'
 
-function parse_input(input) {
-  const input_array = input.split(' ');
-  if (input_array.length === 0) {
-    return {
-      input: input,
-      output: {
-        cmd: input_array[0],
-        args: []
-      }
-    }
-  }
-
+const mapStateToProps = (state, x, y, history) => {
   return {
-    input: input,
-    output: {
-      cmd: input_array[0],
-      args: input_array,
-    }
+    maze: state.maze,
+    x: state.x_position,
+    y: state.y_position,
+    history: state.history,
   }
-
 }
 
-function Terminal({ extra_commands = {} }) {
+const mapDispatchToProps = { runCommand }
 
-  const [history, setHistory] = useState([]);
+function Terminal({ maze, x, y, runCommand, history, extra_commands = {} }) {
+
+  // const [history, setHistory] = useState([]);
   const [currentCommand, setCurrentCommand] = useState('');
   const [commands, setCommands] = useState({
     help: showHelp,
@@ -54,18 +45,22 @@ function Terminal({ extra_commands = {} }) {
     return `hello ${username}`;
   }
 
-  function runCommand(stdin) {
-    const parsed_input = parse_input(stdin)
-    const currentCommand = parsed_input.output.cmd;
-    if (currentCommand in commands) {
-      if ((parsed_input.output.args).length >  0) {
-        const args = parsed_input.output.args
-        return commands[currentCommand](...args)
-      }
-      return commands[currentCommand]();
-    }
-    return  {value: `${currentCommand} is not found`, type: "error"};
-  }
+  // function runCommand(stdin) {
+    // const parsed_input = parse_input(stdin)
+    // const currentCommand = parsed_input.output.cmd;
+    // // if (currentCommand in commands) {
+    // //   if ((parsed_input.output.args).length >  0) {
+    // //     const args = parsed_input.output.args
+    // //     return commands[currentCommand](...args)
+    // //   }
+    // //   return commands[currentCommand]();
+    // // }
+
+    // if (currentCommand === "move") {
+    //   return { value: `yeehhhh`, type: "error" };
+    // }
+    // return  {value: `${currentCommand} is not found`, type: "error"};
+  // }
 
   function handleKeyPress(e) {
     setCurrentCommand(curr => e.target.value);
@@ -76,10 +71,10 @@ function Terminal({ extra_commands = {} }) {
       case "Enter":
         const output = {
           command: currentCommand,
-          value: runCommand(currentCommand),
+          value: runCommand(maze, x, y, currentCommand),
         };
         const newHistory = [...history, output];
-        setHistory(newHistory);
+        // setHistory(newHistory);
         setCurrentCommand('');
         break;
       default:
@@ -138,4 +133,7 @@ function PrintLine({ text, type }) {
   );
 }
 
-export default Terminal;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Terminal);

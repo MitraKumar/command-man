@@ -16,7 +16,6 @@ function App() {
     setXPos(oldX => oldX + Number(x));
     setYPos(oldY => oldY + Number(y));
 
-    console.log(xPos + x);
     return `Moved ${x} pixels in x direction and ${y} in y direction`;
   }
 
@@ -26,7 +25,7 @@ function App() {
       <FlexWrapper>
         <Terminal extra_commands={commands}/>
 
-        <Playground x={xPos} y={yPos}/>
+        <Playground />
       </FlexWrapper>
     </Container>
   );

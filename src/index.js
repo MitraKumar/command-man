@@ -3,11 +3,28 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import store from './store';
+
+// import { updateMaze } from './store/actions'
+// const ORIGINAL_MAZE = [
+//   [0, 1, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 1, 0, 0],
+//   [1, 1, 0, 0, 2, 1, 2, 0],
+//   [0, 1, 0, 1, 0, 1, 0, 0],
+//   [0, 0, 0, 1, 1, 1, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 1, 0],
+//   [0, 1, 0, 0, 0, 0, 1, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0],
+// ];
+// store.dispatch(
+//   updateMaze()
+// )
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
