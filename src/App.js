@@ -5,26 +5,10 @@ import Playground from './components/Playground';
 
 
 function App() {
-  const [xPos, setXPos] = useState(0);
-  const [yPos, setYPos] = useState(0);
-
-  const [commands, setCommands] = useState({
-    move: handleMove,
-  });
-
-  function handleMove(_, x = 0, y = 0) {
-    setXPos(oldX => oldX + Number(x));
-    setYPos(oldY => oldY + Number(y));
-
-    return `Moved ${x} pixels in x direction and ${y} in y direction`;
-  }
-
   return (
     <Container>
-
       <FlexWrapper>
-        <Terminal extra_commands={commands}/>
-
+        <Terminal />
         <Playground />
       </FlexWrapper>
     </Container>

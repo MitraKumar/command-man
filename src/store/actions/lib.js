@@ -14,6 +14,16 @@ export class CommandHandler {
         return this.handleMove(...args);
         break;
       default:
+        this.dispatch({
+          type: "UPDATE_HISTORY",
+          payload: {
+            command: `${command}`,
+            value: {
+              type: 'error',
+              value: `${command} is not a valid command.`
+            },
+          }
+        });
         break;
     }
   }
@@ -59,4 +69,6 @@ export class CommandHandler {
     this.dispatch({ type: "UPDATE_POSITON", payload: { x, y }})
     this.dispatch({ type: "UPDATE_HISTORY", payload: output });
   }
+
+
 }

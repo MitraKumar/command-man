@@ -24,43 +24,9 @@ const mapStateToProps = (state, x, y, history) => {
 
 const mapDispatchToProps = { runCommand }
 
-function Terminal({ maze, x, y, runCommand, history, extra_commands = {} }) {
+function Terminal({ maze, x, y, history, runCommand }) {
 
-  // const [history, setHistory] = useState([]);
   const [currentCommand, setCurrentCommand] = useState('');
-  const [commands, setCommands] = useState({
-    help: showHelp,
-    hello: greetUser,
-  });
-
-  useEffect(() => {
-    setCommands((commands) => ({...commands, ...extra_commands}))
-  }, []);
-
-  function showHelp() {
-    return 'help command';
-  }
-
-  function greetUser(_, username = "user") {
-    return `hello ${username}`;
-  }
-
-  // function runCommand(stdin) {
-    // const parsed_input = parse_input(stdin)
-    // const currentCommand = parsed_input.output.cmd;
-    // // if (currentCommand in commands) {
-    // //   if ((parsed_input.output.args).length >  0) {
-    // //     const args = parsed_input.output.args
-    // //     return commands[currentCommand](...args)
-    // //   }
-    // //   return commands[currentCommand]();
-    // // }
-
-    // if (currentCommand === "move") {
-    //   return { value: `yeehhhh`, type: "error" };
-    // }
-    // return  {value: `${currentCommand} is not found`, type: "error"};
-  // }
 
   function handleKeyPress(e) {
     setCurrentCommand(curr => e.target.value);
@@ -69,12 +35,7 @@ function Terminal({ maze, x, y, runCommand, history, extra_commands = {} }) {
   function handleKeyDown(e) {
     switch(e.code) {
       case "Enter":
-        const output = {
-          command: currentCommand,
-          value: runCommand(maze, x, y, currentCommand),
-        };
-        const newHistory = [...history, output];
-        // setHistory(newHistory);
+        runCommand(maze, x, y, currentCommand);
         setCurrentCommand('');
         break;
       default:

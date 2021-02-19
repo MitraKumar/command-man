@@ -6,21 +6,6 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './store';
 
-// import { updateMaze } from './store/actions'
-// const ORIGINAL_MAZE = [
-//   [0, 1, 0, 0, 0, 0, 0, 0],
-//   [0, 0, 0, 0, 0, 1, 0, 0],
-//   [1, 1, 0, 0, 2, 1, 2, 0],
-//   [0, 1, 0, 1, 0, 1, 0, 0],
-//   [0, 0, 0, 1, 1, 1, 0, 0],
-//   [0, 0, 0, 0, 0, 0, 1, 0],
-//   [0, 1, 0, 0, 0, 0, 1, 0],
-//   [0, 0, 0, 0, 0, 0, 0, 0],
-// ];
-// store.dispatch(
-//   updateMaze()
-// )
-
 ReactDOM.render(
   <Provider store={store}>
     <App />

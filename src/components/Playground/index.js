@@ -4,17 +4,6 @@ import styled from 'styled-components';
 
 import { updateMazePosition } from '../../store/actions'
 
-// const ORIGINAL_MAZE = [
-//   [0, 1, 0, 0, 0, 0, 0, 0],
-//   [0, 0, 0, 0, 0, 1, 0, 0],
-//   [1, 1, 0, 0, 0, 1, 2, 0],
-//   [0, 1, 0, 1, 0, 1, 0, 0],
-//   [0, 0, 0, 1, 1, 1, 0, 0],
-//   [0, 0, 0, 0, 0, 0, 1, 0],
-//   [0, 1, 0, 0, 0, 0, 1, 0],
-//   [0, 0, 0, 0, 0, 0, 0, 0],
-// ];
-
 const mapStateToProps = (state) => {
   return {
     maze: state.maze,
@@ -25,30 +14,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = { updateMazePosition }
 
-// const handleMove(maze) {
-//   return (_, x, y) => {
-//     setXPos(oldX => oldX + Number(x));
-//     setYPos(oldY => oldY + Number(y));
-
-//     console.log(xPos + x);
-//     return `Moved ${x} pixels in x direction and ${y} in y direction`;
-//   }
-// }
-
 function Playground({ maze, x, y, updateMazePosition }) {
 
-  // const [maze, setMaze] = useState(original_maze);
-
-  // useEffect(() => {
-  //   updateMaze(maze)
-  // }, [maze]);
-
   useEffect(() => {
-
-    // const newMaze = original_maze.map(xs => xs.map(x => x));
-    // newMaze[y][x] = -1;
-
-    // setMaze(newMaze);
     updateMazePosition({ x, y })
   }, [x, y]);
 
