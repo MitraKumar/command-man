@@ -87,6 +87,10 @@ function PrintLine({ text, type }) {
     );
   }
 
+  if (text === "") {
+    return <br></br>;
+  }
+
   return (
     <div className="PrintLine">
       { text }

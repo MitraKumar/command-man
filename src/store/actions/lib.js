@@ -10,6 +10,9 @@ export class CommandHandler {
 
   handle(command, args) {
     switch(command) {
+      case "help":
+        return this.showHelp(...args);
+        break;
       case "left":
         return this.handleXMove(-1, ...args);
         break;
@@ -35,6 +38,113 @@ export class CommandHandler {
         });
         break;
     }
+  }
+
+  showHelp(_, help_command) {
+
+    switch(help_command) {
+      case "clear":
+        this.dispatch({
+          type: "UPDATE_HISTORY",
+          payload: {
+            command: `help clear`,
+            value: [
+              'Clears the screen',
+            ],
+          }
+        });
+        return;
+      case "up":
+        this.dispatch({
+          type: "UPDATE_HISTORY",
+          payload: {
+            command: `help up`,
+            value: [
+              'up [no_of_cells]',
+              '',
+              'Moves the piece up by the number of cells.',
+            ],
+          }
+        });
+        return;
+      case "down":
+        this.dispatch({
+          type: "UPDATE_HISTORY",
+          payload: {
+            command: `help down`,
+            value: [
+              'down [no_of_cells]',
+              '',
+              'Moves the piece down by the number of cells.',
+            ],
+          }
+        });
+        return;
+      case "left":
+        this.dispatch({
+          type: "UPDATE_HISTORY",
+          payload: {
+            command: `help left`,
+            value: [
+              'left [no_of_cells]',
+              '',
+              'Moves the piece left by the number of cells.',
+            ],
+          }
+        });
+        return;
+      case "right":
+        this.dispatch({
+          type: "UPDATE_HISTORY",
+          payload: {
+            command: `help right`,
+            value: [
+              'right [no_of_cells]',
+              '',
+              'Moves the piece right by the number of cells.',
+            ],
+          }
+        });
+        return;
+      default:
+        this.dispatch({
+          type: "UPDATE_HISTORY",
+          payload: {
+            command: `help ${help_command}`,
+            value: {
+              type: 'error',
+              value: `${help_command} is not a valid command.`
+            },
+          }
+        });
+        return;
+
+
+
+    }
+
+
+
+
+    this.dispatch({
+      type: "UPDATE_HISTORY",
+      payload: {
+        command: `help`,
+        value: [
+          'Type help [command-name] to get details for the command.',
+          '...',
+          'help: Shows the list of commands with small description.',
+          '',
+          'up: Moves the piece up in the maze',
+          '',
+          'down: Moves the piece down in the maze',
+          '',
+          'left: Moves the piece left in the maze',
+          '',
+          'right: Moves the piece right in the maze',
+        ],
+      }
+    });
   }
 
   handleXMove(direction, command_name, xdiff) {
