@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import {
   TerminalComponent,
@@ -27,6 +27,7 @@ const mapDispatchToProps = { runCommand }
 function Terminal({ maze, x, y, history, runCommand }) {
 
   const [currentCommand, setCurrentCommand] = useState('');
+  const inputRef = useRef('');
 
   function handleKeyPress(e) {
     setCurrentCommand(curr => e.target.value);
@@ -45,13 +46,13 @@ function Terminal({ maze, x, y, history, runCommand }) {
   }
 
   return (
-    <TerminalComponent>
+    <TerminalComponent onClick={e => inputRef.current.focus()}>
       {
         history.map((output, index) => <Print key={index} output={output} />)
       }
       <StdOutputLine>
         <Prompt>$</Prompt>
-        <UserInput onKeyDown={handleKeyDown} onChange={handleKeyPress} value={currentCommand} type="text" autoFocus/>
+        <UserInput ref={inputRef} onKeyDown={handleKeyDown} onChange={handleKeyPress} value={currentCommand} type="text" autoFocus/>
       </StdOutputLine>
     </TerminalComponent>
   );
