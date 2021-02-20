@@ -33,8 +33,8 @@ function Terminal({ maze, x, y, history, runCommand }) {
   }
 
   function handleKeyDown(e) {
-    switch(e.code) {
-      case "Enter":
+    switch(e.keyCode) {
+      case 13:
         runCommand(maze, x, y, currentCommand);
         setCurrentCommand('');
         break;
