@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const TerminalComponent = styled.div`
-  height: 500px;
+  height: 285px;
   padding: 1em;
   background: #0A0A19;
   color: #f4f4f4;

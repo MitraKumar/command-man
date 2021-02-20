@@ -48,35 +48,39 @@ function Cell({ x }) {
 
 }
 
-const Grid = styled.div``;
+const Grid = styled.div`
+`;
 
 const RowElement = styled.div`
+  // width: 240px;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
+  grid-gap: 0.4em;
+  margin-bottom: 0.4em;
 `;
 
 const CellElement = styled.div`
-  width: 30px;
-  height: 30px;
+  // width: 30px;
+  // height: 30px;
 `;
 
 const White = styled.div`
-  width: 30px;
+  width: 100%;
   height: 30px;
   background: green;
 `;
 const Black = styled.div`
-  width: 30px;
+  width: 100%;
   height: 30px;
   background: red;
 `;
 const Player = styled.div`
-  width: 30px;
+  width: 100%;
   height: 30px;
   background: blue;
 `;
 const Target = styled.div`
-  width: 30px;
+  width: 100%;
   height: 30px;
   background: yellow;
 `;
