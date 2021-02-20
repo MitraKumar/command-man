@@ -31,6 +31,8 @@ const mainReducer =  (state = initialState, action) => {
       return {...state, commands: action.payload}
     case "UPDATE_HISTORY":
       return {...state, history: [...state.history, action.payload]}
+    case "CLEAR_HISTORY":
+      return {...state, history: []}
     default:
       return state;
   }

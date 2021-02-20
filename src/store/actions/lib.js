@@ -13,6 +13,11 @@ export class CommandHandler {
       case "help":
         return this.showHelp(...args);
         break;
+      case "clear":
+        this.dispatch({
+          type: "CLEAR_HISTORY",
+        });
+        break;
       case "left":
         return this.handleXMove(-1, ...args);
         break;
@@ -41,6 +46,29 @@ export class CommandHandler {
   }
 
   showHelp(_, help_command) {
+
+    if (help_command === undefined) {
+      this.dispatch({
+        type: "UPDATE_HISTORY",
+        payload: {
+          command: `help`,
+          value: [
+            'Type help [command-name] to get details for the command.',
+            '...',
+            'help: Shows the list of commands with small description.',
+            '',
+            'up: Moves the piece up in the maze',
+            '',
+            'down: Moves the piece down in the maze',
+            '',
+            'left: Moves the piece left in the maze',
+            '',
+            'right: Moves the piece right in the maze',
+          ],
+        }
+      });
+      return;
+    }
 
     switch(help_command) {
       case "clear":
@@ -118,33 +146,7 @@ export class CommandHandler {
           }
         });
         return;
-
-
-
     }
-
-
-
-
-    this.dispatch({
-      type: "UPDATE_HISTORY",
-      payload: {
-        command: `help`,
-        value: [
-          'Type help [command-name] to get details for the command.',
-          '...',
-          'help: Shows the list of commands with small description.',
-          '',
-          'up: Moves the piece up in the maze',
-          '',
-          'down: Moves the piece down in the maze',
-          '',
-          'left: Moves the piece left in the maze',
-          '',
-          'right: Moves the piece right in the maze',
-        ],
-      }
-    });
   }
 
   handleXMove(direction, command_name, xdiff) {
