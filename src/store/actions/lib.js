@@ -274,7 +274,7 @@ export class CommandHandler {
           command: command_string,
           value: {
             type: 'success',
-            value: `Congratulations, you have won. Refrash to restart a new game...`
+            value: `Congratulations, you have won. Refresh to start a new game...`
           },
         },
       });

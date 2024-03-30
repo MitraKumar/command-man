@@ -96,7 +96,7 @@ function PrintLine({ text, type }) {
   if (typeof text === 'object' && "type" in text && text.type === "success") {
     return (
       <StdSuccessLine>
-        Error: { text.value }
+        Wooohhhh: { text.value }
       </StdSuccessLine>
     );
   }

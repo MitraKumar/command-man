@@ -5,11 +5,31 @@ import { MAZE_DATA } from "../../constants/data";
 //
 //
 
+function getEmptyCell(MAZE_DATA) {
 
+  const TOTAL_ATTEMPTS = 40;
+  for (let index = 0; index < TOTAL_ATTEMPTS; index++) {
+    
+    const x = Math.floor(Math.random() * MAZE_DATA[0].length);
+    const y = Math.floor(Math.random() * MAZE_DATA.length);
+    if (MAZE_DATA[y][x] === 1 || MAZE_DATA[y][x] === 2) {
+      continue;
+    }
+    return {
+      x, y,
+    };
+  }
+  return {
+    x: 4,
+    y: 3,
+  };
+}
+
+const {x, y} = getEmptyCell(MAZE_DATA);
 const initialState = {
   maze: MAZE_DATA,
-  x_position: 4,
-  y_position: 3,
+  x_position: x,
+  y_position: y,
   commands: {},
   history: [],
   error: null,
