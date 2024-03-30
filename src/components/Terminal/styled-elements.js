@@ -16,6 +16,11 @@ export const StdErrorLine = styled.div`
   color: red;
 `;
 
+export const StdSuccessLine = styled.div`
+  display: flex;
+  color: green;
+`;
+
 export const StdOutputLine = styled.div`
   display: flex;
 `;

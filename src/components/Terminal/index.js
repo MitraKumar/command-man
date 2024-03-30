@@ -1,13 +1,12 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { connect } from 'react-redux'
 import {
   TerminalComponent,
   Prompt,
-  Command,
-  InputLine,
   UserInput,
   StdOutputLine,
   StdErrorLine,
+  StdSuccessLine,
   OutputLine
 } from './styled-elements';
 
@@ -19,12 +18,13 @@ const mapStateToProps = (state, x, y, history) => {
     x: state.x_position,
     y: state.y_position,
     history: state.history,
+    success: state.success,
   }
 }
 
 const mapDispatchToProps = { runCommand }
 
-function Terminal({ maze, x, y, history, runCommand }) {
+function Terminal({ maze, x, y, history, success, runCommand }) {
 
   const [currentCommand, setCurrentCommand] = useState('');
   const inputRef = useRef('');
@@ -52,7 +52,12 @@ function Terminal({ maze, x, y, history, runCommand }) {
       }
       <StdOutputLine>
         <Prompt>$</Prompt>
-        <UserInput ref={inputRef} onKeyDown={handleKeyDown} onChange={handleKeyPress} value={currentCommand} type="text" autoFocus/>
+        {
+          success
+           ? <UserInput disabled ref={inputRef} onKeyDown={handleKeyDown} onChange={handleKeyPress} value={currentCommand} type="text" autoFocus/>
+           : <UserInput ref={inputRef} onKeyDown={handleKeyDown} onChange={handleKeyPress} value={currentCommand} type="text" autoFocus/>
+          
+        }
       </StdOutputLine>
     </TerminalComponent>
   );
@@ -85,6 +90,14 @@ function PrintLine({ text, type }) {
       <StdErrorLine>
         Error: { text.value }
       </StdErrorLine>
+    );
+  }
+
+  if (typeof text === 'object' && "type" in text && text.type === "success") {
+    return (
+      <StdSuccessLine>
+        Error: { text.value }
+      </StdSuccessLine>
     );
   }
 

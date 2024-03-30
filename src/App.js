@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import styled from 'styled-components';
 import Terminal from './components/Terminal';
 import Playground from './components/Playground';

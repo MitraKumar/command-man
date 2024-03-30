@@ -11,7 +11,7 @@ export class CommandHandler {
   handle(command, args) {
     switch(command) {
       case "help":
-        return this.showHelp(...args);
+        this.showHelp(...args);
         break;
       case "clear":
         this.dispatch({
@@ -19,16 +19,16 @@ export class CommandHandler {
         });
         break;
       case "left":
-        return this.handleXMove(-1, ...args);
+        this.handleXMove(-1, ...args);
         break;
       case "right":
-        return this.handleXMove(1, ...args);
+        this.handleXMove(1, ...args);
         break;
       case "up":
-        return this.handleYMove(-1, ...args);
+        this.handleYMove(-1, ...args);
         break;
       case "down":
-        return this.handleYMove(1, ...args);
+        this.handleYMove(1, ...args);
         break;
       default:
         this.dispatch({
@@ -159,7 +159,7 @@ export class CommandHandler {
 
   checkForWallInXdir(lower_bound, upper_bound, y_position) {
     for (let i = lower_bound; i <= upper_bound; i++) {
-      if (this.maze[y_position][i] == 1) {
+      if (this.maze[y_position][i] === 1) {
         return true;
       }
     }
@@ -168,7 +168,7 @@ export class CommandHandler {
 
   checkForWallInYdir(lower_bound, upper_bound, x_position) {
     for (let i = lower_bound; i <= upper_bound; i++) {
-      if (this.maze[i][x_position] == 1) {
+      if (this.maze[i][x_position] === 1) {
         return true;
       }
     }
@@ -264,6 +264,21 @@ export class CommandHandler {
         });
         return;
       }
+    }
+
+    if (this.maze[y][x] === 2) {
+      this.dispatch({ type: "UPDATE_POSITON", payload: { x, y }});
+      this.dispatch({ 
+        type: "GAME_WON",
+        payload: {
+          command: command_string,
+          value: {
+            type: 'success',
+            value: `Congratulations, you have won. Refrash to restart a new game...`
+          },
+        },
+      });
+      return;
     }
 
     const output = {

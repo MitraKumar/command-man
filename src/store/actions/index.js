@@ -1,17 +1,12 @@
-import { createAction } from '@reduxjs/toolkit'
 import { MAZE_DATA } from "../../constants/data";
 import { CommandHandler } from "./lib";
-
-
-const ADD_COMMAND = "ADD_COMMAND";
-const ADD_COMMAND_FAIL = "ADD_COMMAND_FAIL";
 
 export const updateMazePosition = data => (dispatch) => {
   const {x, y} = data;
 
   const newMaze = MAZE_DATA.map(xs => xs.map(x => x));
 
-  if (newMaze[y][x] == 1) {
+  if (newMaze[y][x] === 1) {
     dispatch({ type: "COMMAND_RUN_FAILED", payload: "Error wall ahead" });
     return;
   }

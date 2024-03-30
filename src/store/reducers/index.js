@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { MAZE_DATA } from "../../constants/data";
 
 // import authReducer from './authReducer';
@@ -33,6 +32,8 @@ const mainReducer =  (state = initialState, action) => {
       return {...state, history: [...state.history, action.payload]}
     case "CLEAR_HISTORY":
       return {...state, history: []}
+    case "GAME_WON":
+      return {...state, history: [action.payload], success: true}
     default:
       return state;
   }

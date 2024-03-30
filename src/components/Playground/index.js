@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux'
 import styled from 'styled-components';
 
@@ -18,7 +18,7 @@ function Playground({ maze, x, y, updateMazePosition }) {
 
   useEffect(() => {
     updateMazePosition({ x, y })
-  }, [x, y]);
+  }, [x, y, updateMazePosition]);
 
   return (
     <Grid>
@@ -57,11 +57,6 @@ const RowElement = styled.div`
   grid-template-columns: repeat(8, 1fr);
   grid-gap: 0.4em;
   margin-bottom: 0.4em;
-`;
-
-const CellElement = styled.div`
-  // width: 30px;
-  // height: 30px;
 `;
 
 const White = styled.div`
